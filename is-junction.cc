@@ -1,7 +1,7 @@
 #include <node.h>
 #include <windows.h>
 
-void IsJunction(const v8::FunctionCallbackInfo<v8::Value>& args) {
+void isJunction(const v8::FunctionCallbackInfo<v8::Value>& args) {
   v8::Isolate* isolate = args.GetIsolate();
 
   if (!args[0]->IsString()) {
@@ -17,30 +17,28 @@ void IsJunction(const v8::FunctionCallbackInfo<v8::Value>& args) {
   HANDLE hFind;
 
   hFind = FindFirstFile(path.c_str(), &FindFileData);
-   if (hFind == INVALID_HANDLE_VALUE) {
-      isolate->ThrowException(v8::Exception::TypeError(
-          v8::String::NewFromUtf8(isolate, "FindFirstFile failed")));
-      return;
+  if (hFind == INVALID_HANDLE_VALUE) {
+    isolate->ThrowException(
+      node::WinapiErrnoException(
+        isolate,
+        ERROR_BAD_PATHNAME,
+        "FindFirstFile",
+        NULL,
+        path.c_str()
+      ) );
+    return;
+  }
 
-   } else {
-     if( FindFileData.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT &&
-     FindFileData.dwReserved0 == IO_REPARSE_TAG_MOUNT_POINT ) {
-       args.GetReturnValue().Set(v8::String::NewFromUtf8( isolate, "yes" ));
-     } else {
-       args.GetReturnValue().Set(v8::String::NewFromUtf8( isolate, "no" ));
-     }
+  bool flagsIndicateJunction = 
+    FindFileData.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT &&
+    FindFileData.dwReserved0 == IO_REPARSE_TAG_MOUNT_POINT;
 
-      FindClose(hFind);
-      return;
-   }
-
-  //auto message = v8::String::NewFromUtf8(isolate, path.c_str());
-  v8::Handle<v8::Value> message = v8::String::NewFromUtf8( isolate, path.c_str() );
-  args.GetReturnValue().Set(message);
+  args.GetReturnValue().Set(flagsIndicateJunction);
+  FindClose(hFind);
 }
 
 void Initialize(v8::Local<v8::Object> exports) {
-  NODE_SET_METHOD(exports, "isJunction", IsJunction);
+  NODE_SET_METHOD(exports, "isJunction", isJunction);
 }
 
 NODE_MODULE(module_name, Initialize)
