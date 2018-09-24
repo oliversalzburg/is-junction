@@ -1,0 +1,17 @@
+{
+  "name": "is-junction",
+  "version": "0.1.0-dev",
+  "description": "Checks if a given path is a junction",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js",
+    "install": "node-gyp rebuild"
+  },
+  "keywords": [
+    "windows",
+    "junction"
+  ],
+  "author": "Oliver Salzburg <oliver.salzburg@gmail.com>",
+  "license": "MIT",
+  "gypfile": true
+}
