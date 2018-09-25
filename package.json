@@ -4,7 +4,7 @@
   "description": "Checks if a given path is a junction",
   "main": "index.js",
   "scripts": {
-    "pretest": "test.cmd",
+    "pretest": "pretest.cmd",
     "test": "node test.js",
     "install": "node-gyp rebuild"
   },

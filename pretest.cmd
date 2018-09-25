@@ -5,11 +5,21 @@
     @goto :EOF
 )
 
+REM Move into the project directory.
+CD /D %~dp0
+
+REM Clear any possible pre-existing test area.
 IF EXIST test RD /S /Q test
+
+REM Re-create the test area.
 MD test
+
+REM Create an empty file and an empty directory.
 TYPE NUL> test\file
 MD test\folder
-MKLINK /D test\symlink-file test\file
+
+REM Create different types of links.
+MKLINK test\symlink-file test\file
 MKLINK /D test\symlink-folder test\folder
 MKLINK /J test\junction-folder test\folder
 
