@@ -1,6 +1,6 @@
 {
   "name": "is-junction",
-  "version": "0.1.0-dev",
+  "version": "1.0.0",
   "description": "Checks if a given path is a junction",
   "main": "index.js",
   "scripts": {
