@@ -12,7 +12,14 @@
     "windows",
     "junction"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oliversalzburg/is-junction.git"
+  },
   "author": "Oliver Salzburg <oliver.salzburg@gmail.com>",
   "license": "MIT",
-  "gypfile": true
+  "gypfile": true,
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
 }
