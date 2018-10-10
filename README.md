@@ -8,7 +8,7 @@ const { isJunction, isJunctionSync } = require( "is-junction" );
 
 isJunctionSync( path ); // returns true or false depending on if the path is a junction.
 
-isJunction( ( error, result ) => {
+isJunction( path, ( error, result ) => {
 	// `result` is true or false depending on if the path is a junction.
 } );
 ```
